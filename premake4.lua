@@ -8,7 +8,7 @@ solution "mavis"
 	
 	project "mavis"
 		kind "SharedLib"
-		files { "mavis/**.cpp" }
+		files { "mavis/source/**.cpp" }
 		
 	project "mavis-test"
 		kind "ConsoleApp"

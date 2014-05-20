@@ -21,32 +21,16 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
-#include <mavis/mavis.hpp>
-#include <mavis/helper/convert.hpp>
+#ifndef __CONVERT_HPP__
+#define __CONVERT_HPP__
 
-#include <iostream>
-#include <sstream>
+#include <string>
 
-using namespace std;
-using namespace mavis::convert;
-
-void mavis::assert_true(bool expr, string func, string file, int line) {
-	mavis::assert_equals(expr, true, func, file, line);
+namespace mavis {
+	namespace convert {
+		std::string bool_to_string(bool);
+		std::string int_to_string(int);
+	}
 }
 
-void mavis::assert_false(bool expr, string func, string file, int line) {
-	mavis::assert_equals(expr, false, func, file, line);
-}
-
-void mavis::assert_equals(int expected, int got, string func, string file, int line) {
-	mavis::print_result(expected == got, int_to_string(expected), int_to_string(got), func, file, line);
-}
-
-void mavis::assert_equals(bool expected, bool got, string func, string file, int line) {
-	mavis::print_result(expected == got, bool_to_string(expected), bool_to_string(got), func, file, line);
-}
-
-static void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
-	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected 
-		<< " got " << got << " at file: " << file << ", line: " << line << endl;
-}
+#endif
