@@ -35,6 +35,7 @@ namespace mavis {
 	void assert_false(bool, std::string, std::string, int);
 
 	void assert_equals(int, int, std::string, std::string, int);
+	void assert_equals(const char*, const char*, std::string, std::string, int);
 	void assert_equals(bool, bool, std::string, std::string, int);
 
 	static void print_result(bool, std::string, std::string, std::string, std::string, int);

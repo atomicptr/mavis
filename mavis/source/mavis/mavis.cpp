@@ -42,6 +42,13 @@ void mavis::assert_equals(int expected, int got, string func, string file, int l
 	mavis::print_result(expected == got, int_to_string(expected), int_to_string(got), func, file, line);
 }
 
+void mavis::assert_equals(const char *expected, const char *got, string func, string file, int line) {
+	string str_expected(expected);
+	string str_got(got);
+
+	mavis::print_result(str_expected == str_got, str_expected, str_got, func, file, line);
+}
+
 void mavis::assert_equals(bool expected, bool got, string func, string file, int line) {
 	mavis::print_result(expected == got, bool_to_string(expected), bool_to_string(got), func, file, line);
 }

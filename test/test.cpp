@@ -26,15 +26,23 @@
 // f(x) = x^2
 int f(int);
 void test_f();
+void string_tests();
 
 int main() {
 
 	test_f();
 	
+	// some other tests
 	mavis_assert_true(false);
 	mavis_assert_true(true);
-
+	
+	string_tests();
+	
 	return 0;
+}
+
+int f(int x) {
+	return x * x;
 }
 
 void test_f() {
@@ -46,7 +54,11 @@ void test_f() {
 	mavis_assert_equals(2, f(1));
 }
 
-int f(int x) {
-	return x * x;
+void string_tests() {
+	// should pass
+	mavis_assert_equals("wtf", "wtf");
+	
+	// should fail
+	mavis_assert_equals("rofl", "wurst");
 }
 
