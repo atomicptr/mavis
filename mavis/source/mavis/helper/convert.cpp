@@ -27,14 +27,6 @@
 
 using namespace std;
 
-string mavis::convert::int_to_string(int i) {
-	stringstream ss;
-	
-	ss << i;
-	
-	return ss.str();
-}
-
 string mavis::convert::bool_to_string(bool b) {
 	return b ? "true" : "false";
 }

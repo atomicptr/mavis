@@ -25,11 +25,17 @@
 #define __CONVERT_HPP__
 
 #include <string>
+#include <sstream>
 
 namespace mavis {
 	namespace convert {
 		std::string bool_to_string(bool);
-		std::string int_to_string(int);
+		
+		template <typename T> std::string to_string(T t) {
+				std::stringstream ss;
+				ss << t;
+				return ss.str();
+		}
 	}
 }
 

@@ -28,7 +28,6 @@
 #include <sstream>
 
 using namespace std;
-using namespace mavis::convert;
 
 void mavis::assert_true(bool expr, string func, string file, int line) {
 	mavis::assert_equals(expr, true, func, file, line);
@@ -39,7 +38,11 @@ void mavis::assert_false(bool expr, string func, string file, int line) {
 }
 
 void mavis::assert_equals(int expected, int got, string func, string file, int line) {
-	mavis::print_result(expected == got, int_to_string(expected), int_to_string(got), func, file, line);
+	mavis::print_result(expected == got, mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
+}
+
+void mavis::assert_equals(long expected, long got, string func, string file, int line) {
+	mavis::print_result(expected == got,mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
 }
 
 void mavis::assert_equals(const char *expected, const char *got, string func, string file, int line) {
@@ -50,7 +53,7 @@ void mavis::assert_equals(const char *expected, const char *got, string func, st
 }
 
 void mavis::assert_equals(bool expected, bool got, string func, string file, int line) {
-	mavis::print_result(expected == got, bool_to_string(expected), bool_to_string(got), func, file, line);
+	mavis::print_result(expected == got, mavis::convert::bool_to_string(expected), mavis::convert::bool_to_string(got), func, file, line);
 }
 
 static void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {

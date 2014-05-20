@@ -38,6 +38,8 @@ int main() {
 	
 	string_tests();
 	
+	mavis_assert_equals(1L, 5L);
+	
 	return 0;
 }
 
