@@ -1,3 +1,6 @@
+obj/
+*.make
+
 # Created by http://www.gitignore.io
 
 ### C++ ###
