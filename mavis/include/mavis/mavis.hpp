@@ -26,12 +26,20 @@
 
 #define mavis_assert_true(expr) (mavis::assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_false(expr) (mavis::assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_assert_equals(x, y) (mavis::assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 
 #include <string>
 
 namespace mavis {
 	void assert_true(bool, std::string, std::string, int);
 	void assert_false(bool, std::string, std::string, int);
+	
+	void assert_equals(int, int, std::string, std::string, int);
+	void assert_equals(bool, bool, std::string, std::string, int);
+	
+	static std::string bool_to_string(bool);
+	static std::string int_to_string(int);
+	static void print_result(bool, std::string, std::string, std::string, std::string, int);
 }
 
 #endif

@@ -24,13 +24,39 @@
 #include <mavis/mavis.hpp>
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
 void mavis::assert_true(bool expr, string func, string file, int line) {
-	cout << (expr ? "PASS" : "FAIL") << ": " << func << ", excepted true got " << (expr ? "true" : "false") << " at file: " << file << ", line: " << line << endl;
+	mavis::assert_equals(expr, true, func, file, line);
 }
 
 void mavis::assert_false(bool expr, string func, string file, int line) {
-	mavis::assert_true(!expr, func, file, line);
+	mavis::assert_equals(expr, false, func, file, line);
+}
+
+void mavis::assert_equals(int expected, int got, string func, string file, int line) {
+	mavis::print_result(expected == got, mavis::int_to_string(expected), mavis::int_to_string(got), func, file, line);
+}
+
+void mavis::assert_equals(bool expected, bool got, string func, string file, int line) {
+	mavis::print_result(expected == got, mavis::bool_to_string(expected), mavis::bool_to_string(got), func, file, line);
+}
+
+static std::string mavis::int_to_string(int i) {
+	stringstream ss;
+	
+	ss << i;
+	
+	return ss.str();
+}
+
+static std::string mavis::bool_to_string(bool b) {
+	return b ? "true" : "false";
+}
+
+static void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
+	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected 
+		<< " got " << got << " at file: " << file << ", line: " << line << endl;
 }

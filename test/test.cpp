@@ -23,10 +23,30 @@
 */
 #include <mavis/mavis.hpp>
 
+// f(x) = x^2
+int f(int);
+void test_f();
+
 int main() {
 
-	mavis_assert_true(true);
+	test_f();
+	
 	mavis_assert_true(false);
+	mavis_assert_true(true);
 
 	return 0;
 }
+
+void test_f() {
+	// should pass
+	mavis_assert_equals(16, f(4));
+	mavis_assert_equals(25, f(5));
+	
+	// should fail
+	mavis_assert_equals(2, f(1));
+}
+
+int f(int x) {
+	return x * x;
+}
+

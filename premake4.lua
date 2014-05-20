@@ -4,6 +4,8 @@ solution "mavis"
 	language "C++"
 	includedirs { "mavis/include" }
 	
+	buildoptions "-std=c++11"
+	
 	project "mavis"
 		kind "SharedLib"
 		files { "mavis/**.cpp" }
