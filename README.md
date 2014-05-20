@@ -1,6 +1,6 @@
 # mavis
 
-Very lightweight C++ unit test framework
+Lightweight C++11 unit test framework.
 
 ## Design goals
 
