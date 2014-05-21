@@ -40,6 +40,7 @@
 #include <array>
 #include <iterator>
 #include <string>
+#include <type_traits>
 
 namespace mavis {
 	void assert_true(bool, std::string, std::string, int);
@@ -49,10 +50,26 @@ namespace mavis {
 
 	void fail(std::string, std::string, std::string, int);
 
-	template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
-		bool result = got == nullptr;
+	template<typename T> bool assert_null_helper(std::true_type, T t) {
+		return !t;
+	}
 
-		mavis::print_result(result, "NULL", mavis::convert::to_string(got), func, file, line);
+	template<typename T> bool assert_null_helper(std::false_type, T t) {
+		return false;
+	}
+
+	template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
+		std::is_pointer<T> tmp;
+
+		bool result = assert_null_helper(tmp, got);
+
+		std::string str_got = "something else";
+
+		if(result) {
+			str_got = "NULL";
+		}
+
+		mavis::print_result(result, "NULL", str_got, func, file, line);
 	}
 
 	template<typename T> void assert_collection_equals(T expected, T got, std::string func,
