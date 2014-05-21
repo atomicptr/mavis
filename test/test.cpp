@@ -31,15 +31,17 @@ void string_tests();
 int main() {
 
 	test_f();
-	
+
 	// some other tests
 	mavis_assert_true(false);
 	mavis_assert_true(true);
-	
+
 	string_tests();
-	
+
 	mavis_assert_equals(1L, 5L);
-	
+
+	mavis_assert_equals(3.14f, 3L);
+
 	return 0;
 }
 
@@ -51,15 +53,15 @@ void test_f() {
 	// should pass
 	mavis_assert_equals(16, f(4));
 	mavis_assert_equals(25, f(5));
-	
+
 	// should fail
 	mavis_assert_equals(2, f(1));
 }
 
 void string_tests() {
 	// should pass
-	mavis_assert_equals("wtf", "wtf");
-	
+	mavis_assert_equals("Johannes", "Johannes");
+
 	// should fail
 	mavis_assert_equals("rofl", "wurst");
 }

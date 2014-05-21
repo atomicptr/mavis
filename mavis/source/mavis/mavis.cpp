@@ -24,9 +24,6 @@
 #include <mavis/mavis.hpp>
 #include <mavis/helper/convert.hpp>
 
-#include <iostream>
-#include <sstream>
-
 using namespace std;
 
 void mavis::assert_true(bool expr, string func, string file, int line) {
@@ -37,26 +34,7 @@ void mavis::assert_false(bool expr, string func, string file, int line) {
 	mavis::assert_equals(expr, false, func, file, line);
 }
 
-void mavis::assert_equals(int expected, int got, string func, string file, int line) {
-	mavis::print_result(expected == got, mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
-}
-
-void mavis::assert_equals(long expected, long got, string func, string file, int line) {
-	mavis::print_result(expected == got,mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
-}
-
-void mavis::assert_equals(const char *expected, const char *got, string func, string file, int line) {
-	string str_expected(expected);
-	string str_got(got);
-
-	mavis::print_result(str_expected == str_got, str_expected, str_got, func, file, line);
-}
-
-void mavis::assert_equals(bool expected, bool got, string func, string file, int line) {
-	mavis::print_result(expected == got, mavis::convert::bool_to_string(expected), mavis::convert::bool_to_string(got), func, file, line);
-}
-
-static void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
-	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected 
+void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
+	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected
 		<< " got " << got << " at file: " << file << ", line: " << line << endl;
 }
