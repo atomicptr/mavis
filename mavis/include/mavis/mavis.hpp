@@ -22,7 +22,7 @@
 	THE SOFTWARE.
 */
 #ifndef __MAVIS_HPP__
-#define __MVAIS_HPP__
+#define __MAVIS_HPP__
 
 #define mavis_assert_true(expr) (mavis::assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_false(expr) (mavis::assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
