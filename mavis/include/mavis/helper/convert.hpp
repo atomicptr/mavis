@@ -30,7 +30,29 @@
 namespace mavis {
 	namespace convert {
 		std::string bool_to_string(bool);
-		
+
+		template <typename T> std::string collection_to_string(T collection) {
+			std::stringstream ss;
+
+			ss << "( ";
+
+			int size = collection.size();
+
+			for(size_t i = 0; i < size; i++) {
+				auto element = collection[i];
+
+				ss << element;
+
+				if(i + 1 < size) {
+					ss << ", ";
+				}
+			}
+
+			ss << " )";
+
+			return ss.str();
+		}
+
 		template <typename T> std::string to_string(T t) {
 				std::stringstream ss;
 				ss << t;

@@ -27,12 +27,17 @@
 #define mavis_assert_true(expr) (mavis::assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_false(expr) (mavis::assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_equals(x, y) (mavis::assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_assert_array_equals(x, y) (mavis::assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_assert_vector_equals(x, y) (mavis::assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_fail(message) (mavis::fail(message, __PRETTY_FUNCTION__, __FILE__, __LINE__))
 
 #include <mavis/helper/convert.hpp>
 
 #include <iostream>
+#include <algorithm>
 #include <cmath>
+#include <array>
+#include <iterator>
 #include <string>
 
 namespace mavis {
@@ -43,9 +48,16 @@ namespace mavis {
 
 	void fail(std::string, std::string, std::string, int);
 
-	template <typename T, typename U> void assert_equals(T expected, U got, std::string func,
+	template<typename T> void assert_collection_equals(T expected, T got, std::string func,
 			std::string file, int line) {
-		print_result(expected == got, mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
+		bool result = std::equal(std::begin(expected), std::end(expected), std::begin(got));
+
+		mavis::print_result(result, mavis::convert::collection_to_string(expected), mavis::convert::collection_to_string(got), func, file, line);
+	}
+
+	template<typename T, typename U> void assert_equals(T expected, U got, std::string func,
+			std::string file, int line) {
+		mavis::print_result(expected == got, mavis::convert::to_string(expected), mavis::convert::to_string(got), func, file, line);
 	}
 
 	template<> void assert_equals<const char*, const char*>(const char *expected, const char *got,

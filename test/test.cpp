@@ -22,6 +22,8 @@
 	THE SOFTWARE.
 */
 #include <mavis/mavis.hpp>
+#include <array>
+#include <vector>
 
 // f(x) = x^2
 int f(int);
@@ -43,6 +45,22 @@ int main() {
 	mavis_assert_equals(3.14f, 3L);
 
 	mavis_fail("test");
+
+	std::array<int, 5> iar1 = {1,2,3,4,5};
+	std::array<int, 5> iar2 = {1,2,3,4,5};
+
+	mavis_assert_array_equals(iar1, iar2);
+
+	std::vector<int> v1;
+	std::vector<int> v2;
+
+	v1.push_back(1337);
+	v2.push_back(1337);
+
+	v1.push_back(5);
+	v2.push_back(4);
+
+	mavis_assert_vector_equals(v1, v2);
 
 	return 0;
 }
