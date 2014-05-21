@@ -34,6 +34,10 @@ void mavis::assert_false(bool expr, string func, string file, int line) {
 	mavis::assert_equals(expr, false, func, file, line);
 }
 
+void mavis::fail(std::string message, std::string func, std::string file, int line) {
+	cout << "FAIL: " << message << " " << func << " at file " << file << ", line: " << line << endl;
+}
+
 void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
 	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected
 		<< " got " << got << " at file: " << file << ", line: " << line << endl;

@@ -27,6 +27,7 @@
 #define mavis_assert_true(expr) (mavis::assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_false(expr) (mavis::assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_equals(x, y) (mavis::assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_fail(message) (mavis::fail(message, __PRETTY_FUNCTION__, __FILE__, __LINE__))
 
 #include <mavis/helper/convert.hpp>
 
@@ -39,6 +40,8 @@ namespace mavis {
 	void assert_false(bool, std::string, std::string, int);
 
 	void print_result(bool, std::string, std::string, std::string, std::string, int);
+
+	void fail(std::string, std::string, std::string, int);
 
 	template <typename T, typename U> void assert_equals(T expected, U got, std::string func,
 			std::string file, int line) {

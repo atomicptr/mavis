@@ -42,6 +42,8 @@ int main() {
 
 	mavis_assert_equals(3.14f, 3L);
 
+	mavis_fail("test");
+
 	return 0;
 }
 
