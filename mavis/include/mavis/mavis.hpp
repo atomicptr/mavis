@@ -26,10 +26,11 @@
 
 #define mavis_assert_true(expr) (mavis::assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_false(expr) (mavis::assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_fail(message) (mavis::fail((message), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_assert_null(expr) (mavis::assert_null((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_equals(x, y) (mavis::assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_array_equals(x, y) (mavis::assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_vector_equals(x, y) (mavis::assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_fail(message) (mavis::fail(message, __PRETTY_FUNCTION__, __FILE__, __LINE__))
 
 #include <mavis/helper/convert.hpp>
 
@@ -47,6 +48,12 @@ namespace mavis {
 	void print_result(bool, std::string, std::string, std::string, std::string, int);
 
 	void fail(std::string, std::string, std::string, int);
+
+	template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
+		bool result = got == nullptr;
+
+		mavis::print_result(result, "NULL", mavis::convert::to_string(got), func, file, line);
+	}
 
 	template<typename T> void assert_collection_equals(T expected, T got, std::string func,
 			std::string file, int line) {

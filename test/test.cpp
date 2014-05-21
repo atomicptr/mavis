@@ -62,6 +62,11 @@ int main() {
 
 	mavis_assert_vector_equals(v1, v2);
 
+	int *i = nullptr;
+
+	mavis_assert_null(i);
+	mavis_assert_null(&v2);
+
 	return 0;
 }
 
