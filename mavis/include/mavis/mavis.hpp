@@ -31,6 +31,8 @@
 #define mavis_assert_equals(x, y) (mavis_unit::mavis::instance()->assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_array_equals(x, y) (mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
 #define mavis_assert_vector_equals(x, y) (mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
+#define mavis_add_test_case(name, func) (mavis_unit::mavis::instance()->add_test_case(name, func))
+#define mavis_run_tests() (mavis_unit::mavis::instance()->run_tests())
 
 #include <mavis/helper/convert.hpp>
 
