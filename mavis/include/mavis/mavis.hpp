@@ -24,8 +24,8 @@
 #ifndef __MAVIS_HPP__
 #define __MAVIS_HPP__
 
-#define mavis_add_test_case(name, func) \
-	mavis_unit::mavis::instance()->add_test_case(name, func)
+#define mavis_create_test_unit(name) \
+	mavis_unit::mavis::instance()->create_test_unit(name)
 #define mavis_run_tests() \
 	mavis_unit::mavis::instance()->run_tests()
 #define mavis_assert_true(expr) \
@@ -43,7 +43,7 @@
 #define mavis_assert_vector_equals(x, y) \
 	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 
-#include <mavis/test_case.hpp>
+#include <mavis/unit.hpp>
 #include <mavis/helper/convert.hpp>
 
 #include <iostream>
@@ -73,12 +73,12 @@ namespace mavis_unit {
 			return false;
 		}
 
-		std::vector<test_case_t> test_cases;
+		std::vector<std::shared_ptr<unit>> test_units;
 
 	public:
 		static std::shared_ptr<mavis> instance();
 
-		void add_test_case(std::string, std::function<void(void)>);
+		std::shared_ptr<unit> create_test_unit(std::string);
 		void run_tests();
 
 		void assert_true(bool, std::string, std::string, int);

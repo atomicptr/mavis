@@ -22,7 +22,6 @@
 	THE SOFTWARE.
 */
 #include <mavis/mavis.hpp>
-#include <mavis/helper/convert.hpp>
 
 using namespace std;
 using namespace mavis_unit;
@@ -32,18 +31,17 @@ shared_ptr<mavis> mavis::instance() {
 	return _instance;
 }
 
-void mavis::add_test_case(std::string test_name, std::function<void(void)> func) {
-	test_case_t test_case;
+shared_ptr<unit> mavis::create_test_unit(string name) {
+	shared_ptr<unit> test_unit = make_shared<unit>(name);
 
-	test_case.name = test_name;
-	test_case.func = func;
+	test_units.push_back(test_unit);
 
-	test_cases.push_back(test_case);
+	return test_unit;
 }
 
 void mavis::run_tests() {
-	for_each(test_cases.begin(), test_cases.end(), [](test_case_t test_case) {
-		test_case.func();
+	for_each(test_units.begin(), test_units.end(), [](shared_ptr<unit> test_unit) {
+		test_unit->run_tests();
 	});
 }
 

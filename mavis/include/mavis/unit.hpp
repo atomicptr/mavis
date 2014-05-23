@@ -21,17 +21,27 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
-#ifndef __MAVIS_TEST_CASE_HPP__
-#define __MAVIS_TEST_CASE_HPP__
+#ifndef __MAVIS_UNIT_HPP__
+#define __MAVIS_UNIT_HPP__
+
+#include <mavis/test_case.hpp>
 
 #include <string>
 #include <functional>
+#include <vector>
 
 namespace mavis_unit {
 
-	struct test_case_t {
+	class unit {
+
+	public:
+		unit(const std::string);
+		void add_test_case(std::string, std::function<void(void)>);
+		void run_tests();
+
+	private:
 		std::string name;
-		std::function<void(void)> func;
+		std::vector<test_case_t> test_cases;
 	};
 };
 

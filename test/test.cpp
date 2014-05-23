@@ -46,13 +46,15 @@ void test_f2() {
 }
 
 void test_main() {
+	auto test_unit = mavis_create_test_unit("test random stuff");
+
 	// test with lambda
-	mavis_add_test_case("test f(x) #1", []() -> void {
+	test_unit->add_test_case("test f(x) #1", []() -> void {
 		mavis_assert_equals(16, f(4));
 	});
 
 	// test with seperate method
-	mavis_add_test_case("test f(x) #2", test_f2);
+	test_unit->add_test_case("test f(x) #2", test_f2);
 
 	mavis_run_tests();
 }

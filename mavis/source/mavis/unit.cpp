@@ -21,18 +21,24 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
 */
-#ifndef __MAVIS_TEST_CASE_HPP__
-#define __MAVIS_TEST_CASE_HPP__
+#include <mavis/unit.hpp>
 
-#include <string>
-#include <functional>
+using namespace mavis_unit;
 
-namespace mavis_unit {
+unit::unit(std::string unit_name) :name(unit_name) {
+}
 
-	struct test_case_t {
-		std::string name;
-		std::function<void(void)> func;
-	};
-};
+void unit::add_test_case(std::string test_name, std::function<void(void)> func) {
+	test_case_t test_case;
 
-#endif
+	test_case.name = test_name;
+	test_case.func = func;
+
+	test_cases.push_back(test_case);
+}
+
+void unit::run_tests() {
+	for_each(test_cases.begin(), test_cases.end(), [](test_case_t test_case) {
+		test_case.func();
+	});
+}
