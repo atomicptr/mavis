@@ -23,12 +23,16 @@
 */
 #include <mavis/unit.hpp>
 
+#include <iostream>
+
+using namespace std;
+
 using namespace mavis_unit;
 
 unit::unit(std::string unit_name) :name(unit_name) {
 }
 
-void unit::add_test_case(std::string test_name, std::function<void(void)> func) {
+void unit::add_test_case(std::string test_name, std::function<test_result_t()> func) {
 	test_case_t test_case;
 
 	test_case.name = test_name;
@@ -39,6 +43,13 @@ void unit::add_test_case(std::string test_name, std::function<void(void)> func) 
 
 void unit::run_tests() {
 	for_each(test_cases.begin(), test_cases.end(), [](test_case_t test_case) {
-		test_case.func();
+		auto result = test_case.func();
+
+		if(!result._force_fail) {
+			cout << (result.result ? "PASS" : "FAIL") << ": " << result.func << ", expected " << result.expected
+				<< " got " << result.got << " at file: " << result.file << ", line: " << result.line << endl;
+		} else {
+			cout << "FAIL: " << result.expected << " " << result.func << " at file " << result.file << ", line: " << result.line << endl;
+		}
 	});
 }

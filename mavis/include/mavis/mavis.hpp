@@ -29,21 +29,22 @@
 #define mavis_run_tests() \
 	mavis_unit::mavis::instance()->run_tests()
 #define mavis_assert_true(expr) \
-	mavis_unit::mavis::instance()->assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_assert_false(expr) \
-	mavis_unit::mavis::instance()->assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_fail(message) \
-	mavis_unit::mavis::instance()->fail((message), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->fail((message), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_assert_null(expr) \
-	mavis_unit::mavis::instance()->assert_null((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_null((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_assert_equals(x, y) \
-	mavis_unit::mavis::instance()->assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_assert_array_equals(x, y) \
-	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 #define mavis_assert_vector_equals(x, y) \
-	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+	return mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 
 #include <mavis/unit.hpp>
+#include <mavis/test_result.hpp>
 #include <mavis/helper/convert.hpp>
 
 #include <iostream>
@@ -64,6 +65,7 @@ namespace mavis_unit {
 	private:
 		mavis() {};
 		void print_result(bool, std::string, std::string, std::string, std::string, int);
+		test_result_t make_result(bool, std::string, std::string, std::string, std::string, int);
 
 		template<typename T> bool assert_null_helper(std::true_type, T t) {
 			return !t;
@@ -84,9 +86,9 @@ namespace mavis_unit {
 		void assert_true(bool, std::string, std::string, int);
 		void assert_false(bool, std::string, std::string, int);
 
-		void fail(std::string, std::string, std::string, int);
+		test_result_t fail(std::string, std::string, std::string, int);
 
-		template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
+		template<typename T> test_result_t assert_null(T got, std::string func, std::string file, int line) {
 			std::is_pointer<T> tmp;
 
 			bool result = assert_null_helper(tmp, got);
@@ -97,115 +99,117 @@ namespace mavis_unit {
 				str_got = "NULL";
 			}
 
-			print_result(result, "NULL", str_got, func, file, line);
+			return make_result(result, "NULL", str_got, func, file, line);
 		}
 
-		template<typename T> void assert_collection_equals(T expected, T got, std::string func,
+		template<typename T> test_result_t assert_collection_equals(T expected, T got, std::string func,
 				std::string file, int line) {
 			bool result = std::equal(std::begin(expected), std::end(expected), std::begin(got));
 
-			print_result(result, mavis_unit::convert::collection_to_string(expected), mavis_unit::convert::collection_to_string(got), func, file, line);
+			return make_result(result, mavis_unit::convert::collection_to_string(expected),
+				mavis_unit::convert::collection_to_string(got), func, file, line);
 		}
 
-		template<typename T, typename U> void assert_equals(T expected, U got, std::string func,
+		template<typename T, typename U> test_result_t assert_equals(T expected, U got, std::string func,
 				std::string file, int line) {
-			print_result(expected == got, mavis_unit::convert::to_string(expected), mavis_unit::convert::to_string(got), func, file, line);
+			return make_result(expected == got, mavis_unit::convert::to_string(expected),
+				mavis_unit::convert::to_string(got), func, file, line);
 		}
 	};
 
-	template<> void mavis::assert_equals<const char*, const char*>(const char *expected, const char *got,
+	template<> test_result_t mavis::assert_equals<const char*, const char*>(const char *expected, const char *got,
 			std::string func, std::string file, int line) {
 		std::string str_expected(expected);
 		std::string str_got(got);
 
-		mavis::instance()->print_result(str_expected == str_got, str_expected, str_got, func, file, line);
+		return make_result(str_expected == str_got, str_expected, str_got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<bool, bool>(bool expected, bool got, std::string func,
+	template<> test_result_t mavis::assert_equals<bool, bool>(bool expected, bool got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->print_result(expected == got, mavis_unit::convert::bool_to_string(expected), mavis_unit::convert::bool_to_string(got), func, file, line);
+		return make_result(expected == got, mavis_unit::convert::bool_to_string(expected), mavis_unit::convert::bool_to_string(got), func, file, line);
 	}
 
-	template<> void mavis::assert_equals<double, double>(double expected, double got, std::string func,
+	template<> test_result_t mavis::assert_equals<double, double>(double expected, double got, std::string func,
 			std::string file, int line) {
 		bool result = std::abs(expected - got) < 0.0000001;
 
-		mavis::instance()->print_result(result, mavis_unit::convert::to_string(expected), mavis_unit::convert::to_string(got), func, file, line);
+		return make_result(result, mavis_unit::convert::to_string(expected), mavis_unit::convert::to_string(got), func, file, line);
 	}
 
-	template<> void mavis::assert_equals<float, float>(float expected, float got, std::string func,
+	template<> test_result_t mavis::assert_equals<float, float>(float expected, float got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<double, float>(double expected, float got, std::string func,
+	template<> test_result_t mavis::assert_equals<double, float>(double expected, float got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals(expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals(expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<float, double>(float expected, double got, std::string func,
+	template<> test_result_t mavis::assert_equals<float, double>(float expected, double got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<int, float>(int expected, float got, std::string func,
+	template<> test_result_t mavis::assert_equals<int, float>(int expected, float got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<float, int>(float expected, int got, std::string func,
+	template<> test_result_t mavis::assert_equals<float, int>(float expected, int got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<int, double>(int expected, double got, std::string func,
+	template<> test_result_t mavis::assert_equals<int, double>(int expected, double got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<double, int>(double expected, int got, std::string func,
+	template<> test_result_t mavis::assert_equals<double, int>(double expected, int got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals(expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals(expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<long, float>(long expected, float got, std::string func,
+	template<> test_result_t mavis::assert_equals<long, float>(long expected, float got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<float, long>(float expected, long got, std::string func,
+	template<> test_result_t mavis::assert_equals<float, long>(float expected, long got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<long, double>(long expected, double got, std::string func,
+	template<> test_result_t mavis::assert_equals<long, double>(long expected, double got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<double, long>(double expected, long got, std::string func,
+	template<> test_result_t mavis::assert_equals<double, long>(double expected, long got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals(expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals(expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<short, float>(short expected, float got, std::string func,
+	template<> test_result_t mavis::assert_equals<short, float>(short expected, float got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<float, short>(float expected, short got, std::string func,
+	template<> test_result_t mavis::assert_equals<float, short>(float expected, short got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, (double)got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<short, double>(short expected, double got, std::string func,
+	template<> test_result_t mavis::assert_equals<short, double>(short expected, double got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals((double)expected, got, func, file, line);
+		return mavis::instance()->assert_equals((double)expected, got, func, file, line);
 	}
 
-	template<> void mavis::assert_equals<double, short>(double expected, short got, std::string func,
+	template<> test_result_t mavis::assert_equals<double, short>(double expected, short got, std::string func,
 			std::string file, int line) {
-		mavis::instance()->assert_equals(expected, (double)got, func, file, line);
+		return mavis::instance()->assert_equals(expected, (double)got, func, file, line);
 	}
 }
 

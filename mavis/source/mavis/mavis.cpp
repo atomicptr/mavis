@@ -53,11 +53,35 @@ void mavis::assert_false(bool expr, string func, string file, int line) {
 	mavis::instance()->assert_equals(expr, false, func, file, line);
 }
 
-void mavis::fail(std::string message, std::string func, std::string file, int line) {
-	cout << "FAIL: " << message << " " << func << " at file " << file << ", line: " << line << endl;
+test_result_t mavis::fail(std::string message, std::string func, std::string file, int line) {
+	test_result_t t_result;
+
+	t_result.result = false;
+	t_result._force_fail = true;
+	t_result.expected = message;
+	t_result.got = "";
+	t_result.func = func;
+	t_result.file = file;
+	t_result.line = line;
+
+	return t_result;
 }
 
 void mavis::print_result(bool result, std::string expected, std::string got, std::string func, std::string file, int line) {
 	cout << (result ? "PASS" : "FAIL") << ": " << func << ", expected " << expected
 		<< " got " << got << " at file: " << file << ", line: " << line << endl;
+}
+
+test_result_t mavis::make_result(bool reuslt, std::string expected, std::string got, std::string func, std::string file, int line) {
+	test_result_t t_result;
+
+	t_result.result = expected == got;
+	t_result._force_fail = false;
+	t_result.expected = expected;
+	t_result.got = got;
+	t_result.func = func;
+	t_result.file = file;
+	t_result.line = line;
+
+	return t_result;
 }

@@ -24,6 +24,8 @@
 #ifndef __MAVIS_TEST_CASE_HPP__
 #define __MAVIS_TEST_CASE_HPP__
 
+#include <mavis/test_result.hpp>
+
 #include <string>
 #include <functional>
 
@@ -31,7 +33,7 @@ namespace mavis_unit {
 
 	struct test_case_t {
 		std::string name;
-		std::function<void(void)> func;
+		std::function<test_result_t()> func;
 	};
 };
 

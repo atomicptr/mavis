@@ -22,13 +22,14 @@
 	THE SOFTWARE.
 */
 #include <mavis/mavis.hpp>
+#include <mavis/test_result.hpp>
 
 #include <array>
 #include <vector>
 
 // f(x) = x^2
 int f(int);
-void test_f2();
+mavis_unit::test_result_t test_f2();
 void test_main();
 
 int main() {
@@ -41,7 +42,7 @@ int f(int x) {
 	return x * x;
 }
 
-void test_f2() {
+mavis_unit::test_result_t test_f2() {
 	mavis_assert_equals(4, f(-2));
 }
 
@@ -49,12 +50,16 @@ void test_main() {
 	auto test_unit = mavis_create_test_unit("test random stuff");
 
 	// test with lambda
-	test_unit->add_test_case("test f(x) #1", []() -> void {
+	test_unit->add_test_case("test f(x) #1", []() -> mavis_unit::test_result_t {
 		mavis_assert_equals(16, f(4));
 	});
 
 	// test with seperate method
 	test_unit->add_test_case("test f(x) #2", test_f2);
+
+	test_unit->add_test_case("test f(x) #3", []() -> mavis_unit::test_result_t {
+		mavis_fail("meh");
+	});
 
 	mavis_run_tests();
 }

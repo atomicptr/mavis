@@ -24,6 +24,7 @@
 #ifndef __MAVIS_UNIT_HPP__
 #define __MAVIS_UNIT_HPP__
 
+#include <mavis/test_result.hpp>
 #include <mavis/test_case.hpp>
 
 #include <string>
@@ -36,7 +37,7 @@ namespace mavis_unit {
 
 	public:
 		unit(const std::string);
-		void add_test_case(std::string, std::function<void(void)>);
+		void add_test_case(std::string, std::function<test_result_t()>);
 		void run_tests();
 
 	private:
