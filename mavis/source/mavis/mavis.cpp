@@ -33,12 +33,17 @@ shared_ptr<mavis> mavis::instance() {
 }
 
 void mavis::add_test_case(std::string test_name, std::function<void(void)> func) {
-	test_cases.push_back(func);
+	test_case_t test_case;
+
+	test_case.name = test_name;
+	test_case.func = func;
+
+	test_cases.push_back(test_case);
 }
 
 void mavis::run_tests() {
-	for_each(test_cases.begin(), test_cases.end(), [](std::function<void(void)> element) {
-		element();
+	for_each(test_cases.begin(), test_cases.end(), [](test_case_t test_case) {
+		test_case.func();
 	});
 }
 

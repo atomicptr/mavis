@@ -43,6 +43,7 @@
 #define mavis_assert_vector_equals(x, y) \
 	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 
+#include <mavis/test_case.hpp>
 #include <mavis/helper/convert.hpp>
 
 #include <iostream>
@@ -72,7 +73,7 @@ namespace mavis_unit {
 			return false;
 		}
 
-		std::vector<std::function<void(void)>> test_cases;
+		std::vector<test_case_t> test_cases;
 
 	public:
 		static std::shared_ptr<mavis> instance();
