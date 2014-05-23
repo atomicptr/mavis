@@ -22,7 +22,6 @@
 	THE SOFTWARE.
 */
 #include <mavis/mavis.hpp>
-#include <mavis/test_result.hpp>
 
 #include "vector3.hpp"
 
