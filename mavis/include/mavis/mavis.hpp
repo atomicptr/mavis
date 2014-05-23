@@ -50,6 +50,14 @@ namespace mavis_unit {
 	private:
 		void print_result(bool, std::string, std::string, std::string, std::string, int);
 
+		template<typename T> bool assert_null_helper(std::true_type, T t) {
+			return !t;
+		}
+
+		template<typename T> bool assert_null_helper(std::false_type, T t) {
+			return false;
+		}
+
 	public:
 		static std::shared_ptr<mavis> instance();
 
@@ -58,13 +66,7 @@ namespace mavis_unit {
 
 		void fail(std::string, std::string, std::string, int);
 
-		template<typename T> bool assert_null_helper(std::true_type, T t) {
-			return !t;
-		}
 
-		template<typename T> bool assert_null_helper(std::false_type, T t) {
-			return false;
-		}
 
 		template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
 			std::is_pointer<T> tmp;
