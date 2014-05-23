@@ -28,6 +28,7 @@
 
 // f(x) = x^2
 int f(int);
+void test_f2();
 void test_main();
 
 int main() {
@@ -40,11 +41,20 @@ int f(int x) {
 	return x * x;
 }
 
+void test_f2() {
+	mavis_assert_equals(4, f(-2));
+}
+
 void test_main() {
 	//mavis_add_test_case("");
-	mavis_unit::mavis::instance()->add_test_case("test f(1) #1", []() -> void {
+
+	// test with lambda
+	mavis_unit::mavis::instance()->add_test_case("test f(x) #1", []() -> void {
 		mavis_assert_equals(16, f(4));
 	});
+
+	// test with seperate method
+	mavis_unit::mavis::instance()->add_test_case("test f(x) #2", test_f2);
 
 	mavis_unit::mavis::instance()->run_tests();
 }
