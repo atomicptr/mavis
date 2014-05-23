@@ -1,6 +1,8 @@
 #ifndef __VECTOR3_HPP__
 #define __VECTOR3_HPP__
 
+#include <ostream>
+
 class vector3 {
 
 public:
@@ -14,6 +16,9 @@ public:
 	vector3& operator+(vector3& other);
 	vector3& operator-(vector3& other);
 	vector3& operator*(int);
+	bool operator==(vector3& other);
 };
+
+std::ostream& operator<<(std::ostream& stream, vector3 v);
 
 #endif

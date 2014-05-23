@@ -71,6 +71,15 @@ void test_main() {
 		mavis_assert_true(result);
 	});
 
+	test_unit->add_test_case("vector == vector", []() -> test_result_t {
+		vector3 v1(1, 1, 1);
+		vector3 v2(1, 1, 1);
+
+		// if you want to test your own types you'll need to override operator== and
+		// overload ostream& operator<<(ostream&, YOUR_CLASS)
+		mavis_assert_equals(v1, v2);
+	});
+
 	// run all test units
 	mavis_run_tests();
 }

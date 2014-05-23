@@ -23,3 +23,13 @@ vector3& vector3::operator*(int scalar) {
 
 	return *this;
 }
+
+bool vector3::operator==(vector3& other) {
+	return this->x == other.x && this->y == other.y && this->z == other.z;
+}
+
+std::ostream& operator<<(std::ostream& stream, vector3 v) {
+	stream << "vector3 (" << v.x << ", " << v.y << ", " << v.z << ")";
+
+	return stream;
+}
