@@ -45,12 +45,12 @@ void mavis::run_tests() {
 	});
 }
 
-void mavis::assert_true(bool expr, string func, string file, int line) {
-	mavis::instance()->assert_equals(expr, true, func, file, line);
+test_result_t mavis::assert_true(bool expr, string func, string file, int line) {
+	return mavis::instance()->assert_equals(true, expr, func, file, line);
 }
 
-void mavis::assert_false(bool expr, string func, string file, int line) {
-	mavis::instance()->assert_equals(expr, false, func, file, line);
+test_result_t mavis::assert_false(bool expr, string func, string file, int line) {
+	return mavis::instance()->assert_equals(false, expr, func, file, line);
 }
 
 test_result_t mavis::fail(std::string message, std::string func, std::string file, int line) {

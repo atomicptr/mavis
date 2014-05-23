@@ -83,8 +83,8 @@ namespace mavis_unit {
 		std::shared_ptr<unit> create_test_unit(std::string);
 		void run_tests();
 
-		void assert_true(bool, std::string, std::string, int);
-		void assert_false(bool, std::string, std::string, int);
+		test_result_t assert_true(bool, std::string, std::string, int);
+		test_result_t assert_false(bool, std::string, std::string, int);
 
 		test_result_t fail(std::string, std::string, std::string, int);
 
