@@ -24,15 +24,24 @@
 #ifndef __MAVIS_HPP__
 #define __MAVIS_HPP__
 
-#define mavis_assert_true(expr) (mavis_unit::mavis::instance()->assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_assert_false(expr) (mavis_unit::mavis::instance()->assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_fail(message) (mavis_unit::mavis::instance()->fail((message), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_assert_null(expr) (mavis_unit::mavis::instance()->assert_null((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_assert_equals(x, y) (mavis_unit::mavis::instance()->assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_assert_array_equals(x, y) (mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_assert_vector_equals(x, y) (mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__))
-#define mavis_add_test_case(name, func) (mavis_unit::mavis::instance()->add_test_case(name, func))
-#define mavis_run_tests() (mavis_unit::mavis::instance()->run_tests())
+#define mavis_add_test_case(name, func) \
+	mavis_unit::mavis::instance()->add_test_case(name, func)
+#define mavis_run_tests() \
+	mavis_unit::mavis::instance()->run_tests()
+#define mavis_assert_true(expr) \
+	mavis_unit::mavis::instance()->assert_true((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_assert_false(expr) \
+	mavis_unit::mavis::instance()->assert_false((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_fail(message) \
+	mavis_unit::mavis::instance()->fail((message), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_assert_null(expr) \
+	mavis_unit::mavis::instance()->assert_null((expr), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_assert_equals(x, y) \
+	mavis_unit::mavis::instance()->assert_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_assert_array_equals(x, y) \
+	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
+#define mavis_assert_vector_equals(x, y) \
+	mavis_unit::mavis::instance()->assert_collection_equals((x), (y), __PRETTY_FUNCTION__, __FILE__, __LINE__)
 
 #include <mavis/helper/convert.hpp>
 
