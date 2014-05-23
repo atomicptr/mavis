@@ -27,6 +27,6 @@
 
 using namespace std;
 
-string mavis::convert::bool_to_string(bool b) {
+string mavis_unit::convert::bool_to_string(bool b) {
 	return b ? "true" : "false";
 }

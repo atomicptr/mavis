@@ -27,48 +27,12 @@
 
 // f(x) = x^2
 int f(int);
-void test_f();
-void string_tests();
+void test_main();
 
 int main() {
+	test_main();
 
-	test_f();
-
-	// some other tests
-	mavis_assert_true(false);
 	mavis_assert_true(true);
-
-	string_tests();
-
-	mavis_assert_equals(1L, 5L);
-
-	mavis_assert_equals(3.14f, 3L);
-
-	mavis_fail("test");
-
-	std::array<int, 5> iar1 = {1,2,3,4,5};
-	std::array<int, 5> iar2 = {1,2,3,4,5};
-
-	mavis_assert_array_equals(iar1, iar2);
-
-	std::vector<int> v1;
-	std::vector<int> v2;
-
-	v1.push_back(1337);
-	v2.push_back(1337);
-
-	v1.push_back(5);
-	v2.push_back(4);
-
-	mavis_assert_vector_equals(v1, v2);
-
-	int *i = nullptr;
-	int y = 5;
-	int *x = &y;
-
-	mavis_assert_null(i);
-	mavis_assert_null(y);
-	mavis_assert_null(v2);
 
 	return 0;
 }
@@ -77,20 +41,6 @@ int f(int x) {
 	return x * x;
 }
 
-void test_f() {
-	// should pass
-	mavis_assert_equals(16, f(4));
-	mavis_assert_equals(25, f(5));
+void test_main() {
 
-	// should fail
-	mavis_assert_equals(2, f(1));
 }
-
-void string_tests() {
-	// should pass
-	mavis_assert_equals("Johannes", "Johannes");
-
-	// should fail
-	mavis_assert_equals("rofl", "wurst");
-}
-

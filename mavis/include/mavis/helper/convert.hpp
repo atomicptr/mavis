@@ -27,7 +27,7 @@
 #include <string>
 #include <sstream>
 
-namespace mavis {
+namespace mavis_unit {
 	namespace convert {
 		std::string bool_to_string(bool);
 

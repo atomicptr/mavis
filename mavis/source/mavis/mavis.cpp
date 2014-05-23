@@ -25,13 +25,19 @@
 #include <mavis/helper/convert.hpp>
 
 using namespace std;
+using namespace mavis_unit;
+
+shared_ptr<mavis> mavis::instance() {
+	static shared_ptr<mavis> _instance = shared_ptr<mavis>(new mavis());
+	return _instance;
+}
 
 void mavis::assert_true(bool expr, string func, string file, int line) {
-	mavis::assert_equals(expr, true, func, file, line);
+	mavis::instance()->assert_equals(expr, true, func, file, line);
 }
 
 void mavis::assert_false(bool expr, string func, string file, int line) {
-	mavis::assert_equals(expr, false, func, file, line);
+	mavis::instance()->assert_equals(expr, false, func, file, line);
 }
 
 void mavis::fail(std::string message, std::string func, std::string file, int line) {
