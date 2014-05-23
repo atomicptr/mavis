@@ -38,10 +38,12 @@
 #include <algorithm>
 #include <cmath>
 #include <array>
+#include <vector>
 #include <iterator>
 #include <string>
 #include <type_traits>
 #include <memory>
+#include <functional>
 
 namespace mavis_unit {
 
@@ -59,15 +61,18 @@ namespace mavis_unit {
 			return false;
 		}
 
+		std::vector<std::function<void(void)>> test_cases;
+
 	public:
 		static std::shared_ptr<mavis> instance();
+
+		void add_test_case(std::string, std::function<void(void)>);
+		void run_tests();
 
 		void assert_true(bool, std::string, std::string, int);
 		void assert_false(bool, std::string, std::string, int);
 
 		void fail(std::string, std::string, std::string, int);
-
-
 
 		template<typename T> void assert_null(T got, std::string func, std::string file, int line) {
 			std::is_pointer<T> tmp;

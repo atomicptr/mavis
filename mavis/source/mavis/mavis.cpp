@@ -32,6 +32,16 @@ shared_ptr<mavis> mavis::instance() {
 	return _instance;
 }
 
+void mavis::add_test_case(std::string test_name, std::function<void(void)> func) {
+	test_cases.push_back(func);
+}
+
+void mavis::run_tests() {
+	for_each(test_cases.begin(), test_cases.end(), [](std::function<void(void)> element) {
+		element();
+	});
+}
+
 void mavis::assert_true(bool expr, string func, string file, int line) {
 	mavis::instance()->assert_equals(expr, true, func, file, line);
 }

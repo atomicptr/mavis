@@ -22,6 +22,7 @@
 	THE SOFTWARE.
 */
 #include <mavis/mavis.hpp>
+
 #include <array>
 #include <vector>
 
@@ -32,8 +33,6 @@ void test_main();
 int main() {
 	test_main();
 
-	mavis_assert_true(true);
-
 	return 0;
 }
 
@@ -42,5 +41,10 @@ int f(int x) {
 }
 
 void test_main() {
+	//mavis_add_test_case("");
+	mavis_unit::mavis::instance()->add_test_case("test f(1) #1", []() -> void {
+		mavis_assert_equals(16, f(4));
+	});
 
+	mavis_unit::mavis::instance()->run_tests();
 }
