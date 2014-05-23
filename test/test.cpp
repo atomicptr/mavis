@@ -24,12 +24,12 @@
 #include <mavis/mavis.hpp>
 #include <mavis/test_result.hpp>
 
-#include <array>
-#include <vector>
+#include "vector3.hpp"
 
-// f(x) = x^2
-int f(int);
-mavis_unit::test_result_t test_f2();
+#include <array>
+
+using namespace mavis_unit;
+
 void test_main();
 
 int main() {
@@ -38,28 +38,41 @@ int main() {
 	return 0;
 }
 
-int f(int x) {
-	return x * x;
-}
-
-mavis_unit::test_result_t test_f2() {
-	mavis_assert_equals(4, f(-2));
-}
-
 void test_main() {
-	auto test_unit = mavis_create_test_unit("test random stuff");
+	auto test_unit = mavis_create_test_unit("vector3 class test");
 
-	// test with lambda
-	test_unit->add_test_case("test f(x) #1", []() -> mavis_unit::test_result_t {
-		mavis_assert_equals(16, f(4));
+	test_unit->add_test_case("vector + vector", []() -> test_result_t {
+		vector3 v1(1, 2, 3);
+		vector3 v2(3, 2, 1);
+
+		vector3 v3 = v1 + v2;
+
+		bool result = v3.x == 4 && v3.y == 4 && v3.z == 4;
+
+		mavis_assert_true(result);
 	});
 
-	// test with seperate method
-	test_unit->add_test_case("test f(x) #2", test_f2);
+	test_unit->add_test_case("vector - vector", []() -> test_result_t {
+		vector3 v1(1, 2, 3);
 
-	test_unit->add_test_case("test f(x) #3", []() -> mavis_unit::test_result_t {
-		mavis_fail("meh");
+		vector3 v2 = v1 - v1;
+
+		bool result = v2.x == 0 && v2.y == 0 && v2.z == 0;
+
+		mavis_assert_true(result);
 	});
 
+	test_unit->add_test_case("vector * scalar", []() -> test_result_t {
+		vector3 v1(1, 1, 1);
+
+		v1 = v1 * 4;
+
+		bool result = v1.x == 4 && v1.y == 4 && v1.z == 4;
+
+		mavis_assert_true(result);
+	});
+
+	// run all test units
 	mavis_run_tests();
 }
+
