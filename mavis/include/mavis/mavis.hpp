@@ -48,6 +48,7 @@ namespace mavis_unit {
 	class mavis {
 
 	private:
+		mavis() {};
 		void print_result(bool, std::string, std::string, std::string, std::string, int);
 
 		template<typename T> bool assert_null_helper(std::true_type, T t) {
