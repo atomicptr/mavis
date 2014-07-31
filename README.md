@@ -1,10 +1,6 @@
 # mavis
 
-Lightweight C++11 unit test framework.
-
-## Design goals
-
-My primary goal is to create a very lightweight C++ unit test framework which doesn't require any other libraries (except the STL) and only has the (in my humble opinion) most important features.
+Very lightweight zero dependency C++11 unit test framework.
 
 ## License
 
