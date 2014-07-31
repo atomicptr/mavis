@@ -30,11 +30,23 @@ void mavis::unit::add_test(std::function<mavis::test()> test) {
 }
 
 void mavis::unit::run_tests() const {
+    std::cout << std::endl << "Test case: " << this->name << std::endl <<
+        "------------------" << std::endl;
+
+    size_t tests_passed = 0;
+
     for(auto test : this->tests) {
         auto result = test();
 
+        if(result.result) {
+            tests_passed++;
+        }
+
         this->print_result(result);
     }
+
+    std::cout << std::endl << tests_passed << " of " << this->tests.size() <<
+        " tests passed." << std::endl;
 }
 
 void mavis::unit::print_result(mavis::test test) const {
