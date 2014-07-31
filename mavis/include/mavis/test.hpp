@@ -21,28 +21,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#ifndef __MAVIS_UNIT_HPP__
-#define __MAVIS_UNIT_HPP__
+#ifndef __MAVIS_TEST_HPP__
+#define __MAVIS_TEST_HPP__
 
-#include <iostream>
 #include <string>
-#include <vector>
-#include <functional>
-
-#include <mavis/test.hpp>
 
 namespace mavis {
-    class unit {
+    class test {
     public:
-        unit(std::string);
-        void add_test(std::function<mavis::test()>);
-        void run_tests() const;
+        test(bool, std::string, std::string, std::string, std::string, int);
 
-    private:
-        const std::string name;
-        std::vector<std::function<mavis::test()>> tests;
-
-        void print_result(mavis::test) const;
+        const bool result;
+        const std::string expected;
+        const std::string got;
+        const std::string func;
+        const std::string file;
+        const int line;
     };
 }
 

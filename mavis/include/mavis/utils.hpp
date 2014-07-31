@@ -21,29 +21,46 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#ifndef __MAVIS_UNIT_HPP__
-#define __MAVIS_UNIT_HPP__
+#ifndef __MAVIS_UTILS_HPP__
+#define __MAVIS_UTILS_HPP__
 
-#include <iostream>
 #include <string>
-#include <vector>
-#include <functional>
-
-#include <mavis/test.hpp>
+#include <sstream>
 
 namespace mavis {
-    class unit {
-    public:
-        unit(std::string);
-        void add_test(std::function<mavis::test()>);
-        void run_tests() const;
+    namespace utils {
+        std::string bool_to_string(bool b) {
+            return b ? "true" : "false";
+        }
 
-    private:
-        const std::string name;
-        std::vector<std::function<mavis::test()>> tests;
+        template <typename T> std::string collection_to_string(T collection) {
+            std::stringstream ss;
 
-        void print_result(mavis::test) const;
-    };
+            ss << "( ";
+
+            int size = collection.size();
+
+            for(size_t i = 0; i < size; i++) {
+                auto element = collection[i];
+
+                ss << element;
+
+                if(i + 1 < size) {
+                    ss << ", ";
+                }
+            }
+
+            ss << " )";
+
+            return ss.str();
+        }
+
+        template <typename T> std::string to_string(T t) {
+            std::stringstream ss;
+            ss << t;
+            return ss.str();
+        }
+    }
 }
 
 #endif
