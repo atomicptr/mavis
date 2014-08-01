@@ -1,5 +1,5 @@
 solution "mavis"
-    configurations { "debug", "release" }
+    configurations { "debug" }
 
     language "C++"
     includedirs { "mavis/include" }
@@ -12,6 +12,3 @@ solution "mavis"
     project "mavis"
         kind "SharedLib"
         files { "mavis/source/**.cpp" }
-
-        configuration { "debug" }
-            flags { "Symbols" }
