@@ -2,21 +2,6 @@
 
 Very lightweight zero dependency C++11 unit test framework.
 
-## Install
-
-### OS X
-
-If you're using homebrew
-
-    brew install mavis
-
-### Other
-
-Just compile it and use the dynamic lib or whatever you think is right.
-
-    premake4 gmake
-    make
-
 ## Usage
 
 First you obviously need to add the header file:
