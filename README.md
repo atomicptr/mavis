@@ -39,6 +39,13 @@ at last you only need to run the tests with:
 
     test_unit.run_tests();
 
+## Projects using mavis
+
+* [MarkIV game engine](https://github.com/Berling/MarkIV)
+* [ntd framework](https://github.com/kasoki/ntd)
+
+Want to be on that list? Write me an email: [ikasoki@gmail.com](mailto:ikasoki@gmail.com)
+
 ## License
 
 The project is licensed under the terms of the MIT license (read the "LICENSE" file for more informations)
