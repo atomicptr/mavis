@@ -2,6 +2,12 @@
 
 Very lightweight zero dependency C++11 unit test framework.
 
+## Install
+
+### homebrew (OS X)
+
+    brew install https://raw.githubusercontent.com/kasoki/mavis/master/misc/mavis.rb
+
 ## Usage
 
 First you obviously need to add the header file:
