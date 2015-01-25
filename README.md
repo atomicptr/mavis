@@ -23,6 +23,13 @@ Just put the ``mavis.hpp`` somewhere into your project and use it like this:
         });
     });
 
+Please note that ``expect_equals`` also works with custom types if you override:
+
+* operator==(...)
+* operator<<(std::ostream&, custom_type&)
+
+For more informations please [read the documentation](https://github.com/kasoki/mavis/wiki)
+
 ## License
 
 MIT

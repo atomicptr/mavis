@@ -28,10 +28,18 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <functional>
 #include <vector>
 
 namespace mavis {
+
+    template<typename T>
+    auto to_string(T val) {
+        std::stringstream ss;
+        ss << val;
+        return ss.str();
+    }
 
     const std::string SPACE = "    ";
 
@@ -48,8 +56,8 @@ namespace mavis {
 
         template<typename T>
         void expect_equals(T expected, T got) {
-            auto expected_str = std::to_string(expected);
-            auto got_str = std::to_string(got);
+            auto expected_str = to_string(expected);
+            auto got_str = to_string(got);
 
             result res = {
                 .passed = expected == got,
