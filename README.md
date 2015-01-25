@@ -1,6 +1,6 @@
 # mavis
 
-Lightweight, header only C++14 unit test framework inspired by jasmin.js
+Lightweight, header only C++14 unit test framework inspired by [jasmine](http://jasmine.github.io)
 
 ## Usage
 
