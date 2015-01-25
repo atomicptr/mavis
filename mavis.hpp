@@ -69,6 +69,32 @@ namespace mavis {
             results_.push_back(res);
         }
 
+        void expect_true(bool expected) {
+            auto got = std::string{expected ? "true" : "false"};
+
+            result res = {
+                .passed = expected,
+                .expected = "true",
+                .got = got,
+                .message = "true, got " + got
+            };
+
+            results_.push_back(res);
+        }
+
+        void expect_false(bool expected) {
+            auto got = std::string{expected ? "true" : "false"};
+
+            result res = {
+                .passed = !expected,
+                .expected = "false",
+                .got = got,
+                .message = "false, got " + got
+            };
+
+            results_.push_back(res);
+        }
+
         auto& name() const {
             return name_;
         }
@@ -107,7 +133,7 @@ namespace mavis {
         }
 
         void print() {
-            std::cout << "# Test suite: " << name_ << std::endl << std::endl;
+            std::cout << std::endl << "#  " << name_ << std::endl << std::endl;
 
             auto spec_counter = 0u;
             auto failure_counter = 0u;
