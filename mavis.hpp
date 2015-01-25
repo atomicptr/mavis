@@ -1,7 +1,9 @@
 /*
-    Copyright (c) 2014 Christopher Kaster <http://christopher.kaster.ws>
+    mavis <https://github.com/kasoki/mavis>
 
-    This file is part of the "mavis" C++ unit testing framework <https://github.com/kasoki/mavis>
+    The MIT License (MIT)
+
+    Copyright (c) 2015 Christopher Kaster <http://christopher.kaster.ws>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -21,35 +23,18 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-#include <mavis/unit.hpp>
+#ifndef __MAVIS_MAVIS_HPP__
+#define __MAVIS_MAVIS_HPP__
 
-mavis::unit::unit(std::string name) : name(name) {}
+#include <iostream>
+#include <string>
+#include <funcitonal>
 
-void mavis::unit::add_test(std::function<mavis::test()> test) {
-    this->tests.push_back(test);
-}
+namespace mavis {
 
-void mavis::unit::run_tests() const {
-    std::cout << std::endl << "Test case: " << this->name << std::endl <<
-        "------------------" << std::endl;
+    void describe(std::string name, std::function<void(void)> test_suite) {
 
-    size_t tests_passed = 0;
-
-    for(auto test : this->tests) {
-        auto result = test();
-
-        if(result.result) {
-            tests_passed++;
-        }
-
-        this->print_result(result);
     }
-
-    std::cout << std::endl << tests_passed << " of " << this->tests.size() <<
-        " tests passed." << std::endl;
 }
 
-void mavis::unit::print_result(mavis::test test) const {
-    std::cout << (test.result ? "PASS" : "FAIL") << ": " << test.func << ", expected " << test.expected
-        << " got " << test.got << " at file: " << test.file << ", line: " << test.line << std::endl;
-}
+#endif
