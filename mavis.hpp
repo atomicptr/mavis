@@ -135,20 +135,20 @@ namespace mavis {
     public:
         suite(std::string name) : name_(name) {}
 
-        void before_each(reset_func f) {
-            before_each_func_ = f;
+        void before(reset_func f) {
+            before_func_ = f;
         }
 
-        void after_each(reset_func f) {
-            after_each_func_ = f;
+        void after(reset_func f) {
+            after_func_ = f;
         }
 
         void it(std::string spec_name, spec_function test_spec) {
             spec s(spec_name);
 
-            before_each_func_();
+            before_func_();
             test_spec(s);
-            after_each_func_();
+            after_func_();
 
             specs_.push_back(s);
         }
@@ -186,8 +186,8 @@ namespace mavis {
         std::string name_;
         std::vector<spec> specs_;
 
-        reset_func before_each_func_ = [](){};
-        reset_func after_each_func_ = [](){};
+        reset_func before_func_ = [](){};
+        reset_func after_func_ = [](){};
     };
 
     void describe(std::string name, std::function<void(suite&)> test_suite) {
