@@ -95,6 +95,16 @@ namespace mavis {
             results_.push_back(res);
         }
 
+        template<typename T>
+        void expect_not_null(T* ptr) {
+            result res = {
+                .passed = ptr != nullptr,
+                .message = "pointer that is not null"
+            };
+
+            results_.push_back(res);
+        }
+
         auto& name() const {
             return name_;
         }
