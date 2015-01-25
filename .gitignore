@@ -1,6 +1,4 @@
-obj/
-*.make
-Makefile
+/*.cpp
 
 # Created by http://www.gitignore.io
 

@@ -28,12 +28,116 @@
 
 #include <iostream>
 #include <string>
-#include <funcitonal>
+#include <functional>
+#include <vector>
 
 namespace mavis {
 
-    void describe(std::string name, std::function<void(void)> test_suite) {
+    const std::string SPACE = "    ";
 
+    struct result {
+        bool passed;
+        std::string expected;
+        std::string got;
+        std::string message;
+    };
+
+    class spec {
+    public:
+        spec(std::string name) : name_(name) {}
+
+        template<typename T>
+        void expect_equals(T expected, T got) {
+            auto expected_str = std::to_string(expected);
+            auto got_str = std::to_string(got);
+
+            result res = {
+                .passed = expected == got,
+                .expected = expected_str,
+                .got = got_str,
+                .message = expected_str + " to equal " + got_str
+            };
+
+            results_.push_back(res);
+        }
+
+        auto& name() const {
+            return name_;
+        }
+
+        auto passed() const {
+            auto pass = true;
+
+            for(auto &r : results_) {
+                pass = pass && r.passed;
+            }
+
+            return pass;
+        }
+
+        auto& results() const {
+            return results_;
+        }
+
+    private:
+        std::string name_;
+        std::vector<result> results_;
+    };
+
+    using spec_function = std::function<void(spec&)>;
+
+    class suite {
+    public:
+        suite(std::string name) : name_(name) {}
+
+        void it(std::string spec_name, spec_function test_spec) {
+            spec s(spec_name);
+
+            test_spec(s);
+
+            specs_.push_back(s);
+        }
+
+        void print() {
+            std::cout << "# Test suite: " << name_ << std::endl << std::endl;
+
+            auto spec_counter = 0u;
+            auto failure_counter = 0u;
+
+            for(auto &spec : specs_) {
+                std::cout << "it: " << spec.name() << ": " <<
+                    (spec.passed() ? "PASS" : "FAIL") << std::endl;
+
+                auto& results = spec.results();
+                spec_counter += results.size();
+
+                for(auto &r : results) {
+                    std::cout << SPACE << (r.passed ? "+" : "-") <<
+                        " expect " << r.message << std::endl;
+
+                    if(!r.passed) {
+                        failure_counter++;
+                    }
+                }
+
+                std::cout << std::endl;
+            }
+
+            std::cout << spec_counter << " specs, " << failure_counter <<
+                    " failures" << std::endl;
+        }
+
+    private:
+        std::string name_;
+        std::vector<spec> specs_;
+    };
+
+    void describe(std::string name, std::function<void(suite&)> test_suite) {
+        suite s(name);
+
+        test_suite(s);
+
+        s.print();
     }
 }
 
