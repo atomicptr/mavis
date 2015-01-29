@@ -166,16 +166,18 @@ namespace mavis {
                 auto& results = spec.results();
                 spec_counter += results.size();
 
-                for(auto &r : results) {
-                    std::cout << SPACE << (r.passed ? "+" : "-") <<
-                        " expect " << r.message << std::endl;
+                if(!spec.passed()) {
+                    for(auto &r : results) {
+                        std::cout << SPACE << (r.passed ? "+" : "-") <<
+                            " expect " << r.message << std::endl;
 
-                    if(!r.passed) {
-                        failure_counter++;
+                        if(!r.passed) {
+                            failure_counter++;
+                        }
                     }
-                }
 
-                std::cout << std::endl;
+                    std::cout << std::endl;
+                }
             }
 
             std::cout << spec_counter << " specs, " << failure_counter <<
