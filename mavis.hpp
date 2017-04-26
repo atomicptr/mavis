@@ -60,12 +60,11 @@ namespace mavis {
             auto expected_str = to_string(expected);
             auto got_str = to_string(got);
 
-            result res = {
-                .passed = expected == got,
-                .expected = expected_str,
-                .got = got_str,
-                .message = expected_str + " to equal " + got_str
-            };
+            result res;
+            res.passed = expected == got;
+            res.expected = expected_str;
+            res.got = got_str;
+            res.message = expected_str + " to equal " + got_str;
 
             results_.push_back(res);
         }
@@ -73,12 +72,11 @@ namespace mavis {
         void expect_true(bool expected) {
             auto got = std::string{expected ? "true" : "false"};
 
-            result res = {
-                .passed = expected,
-                .expected = "true",
-                .got = got,
-                .message = "true, got " + got
-            };
+            result res;
+            res.passed = expected;
+            res.expected = "true";
+            res.got = got;
+            res.message = "true, got " + got;
 
             results_.push_back(res);
         }
@@ -86,12 +84,11 @@ namespace mavis {
         void expect_false(bool expected) {
             auto got = std::string{expected ? "true" : "false"};
 
-            result res = {
-                .passed = !expected,
-                .expected = "false",
-                .got = got,
-                .message = "false, got " + got
-            };
+            result res;
+            res.passed = !expected;
+            res.expected = "false";
+            res.got = got;
+            res.message = "false, got " + got;
 
             results_.push_back(res);
         }
